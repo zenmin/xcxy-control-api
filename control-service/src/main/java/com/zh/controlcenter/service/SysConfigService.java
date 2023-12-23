@@ -44,4 +44,5 @@ public interface SysConfigService extends IService<SysConfig> {
      */
     boolean delete(Long id);
 
+    void addPersonCount(int i);
 }

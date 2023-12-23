@@ -32,7 +32,7 @@ public class AuthenticationInterceptor implements WebFilter {
         if (exchange.getRequest().getPath().value().startsWith("/api") && Objects.isNull(UserContextHolder.getLoginUser())) {
             String requestIpAddr = IpHelper.getIpAddress(exchange.getRequest());
             UserContextHolder.set(new UserSimpleDo(IdWorker.getId(), requestIpAddr));
-            log.info("reqip = " + requestIpAddr);
+//            log.info("reqip = " + requestIpAddr);
 //        String token = headers.getFirst(CommonConstant.TOKEN);
             // 验证登陆
         }

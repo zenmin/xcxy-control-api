@@ -86,7 +86,7 @@ public class SysUserController {
 
     @PostMapping("/makeVow")
     @Operation(summary = "页面二：2、许愿", description = "许愿成功会返回一个deviceId。前端需要缓存到本地localStorage里面，用来页面二查询点亮的地标建筑的")
-//    @RateLimiter(value = "2", target = CommonConstant.LIMIT_USER_IP)
+    @RateLimiter(value = "2", target = CommonConstant.LIMIT_USER_IP)
     public ResponseEntity<List<Map>> makeVow(@RequestBody MakeVowParam makeVowParam, ServerWebExchange exchange) {
         String requestIpAddr = IpHelper.getIpAddress(exchange.getRequest());
         SysConfig config = this.getConfig();
@@ -123,6 +123,7 @@ public class SysUserController {
         sysUser.setCoins(1);
         sysUser.setIp(requestIpAddr);
         sysUserService.save(sysUser);
+        configService.addPersonCount(1);
         return ResponseEntity.success(sysUser);
     }
 
@@ -142,7 +143,7 @@ public class SysUserController {
     @PostMapping("/putin")
     @Operation(summary = "页面三：2、投入许愿池")
     @Parameter(name = "phone", description = "手机号", required = true)
-    //    @RateLimiter(value = "2", target = CommonConstant.LIMIT_USER_IP)
+    @RateLimiter(value = "2", target = CommonConstant.LIMIT_USER_IP)
     public ResponseEntity<Boolean> putin(@RequestBody @Parameter(hidden = true) JSONObject params) {
         String phone = params.getString("phone");
         if (StringUtils.isBlank(phone)) {
@@ -274,7 +275,7 @@ public class SysUserController {
     /**
      * 定时加人数
      */
-    @Scheduled(cron = "0 */5 * * * ?")
+    @Scheduled(cron = "${updatePersonCount.cron}")
     public void addUser() {
         SysConfig config = this.getConfig();
         if (config.getStatus() != CommonConstant.STATUS_OK) {

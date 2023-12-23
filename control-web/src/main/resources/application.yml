@@ -58,6 +58,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       table-underline: true
 
+updatePersonCount:
+  cron:  "0 */5 * * * ?"
 
 # springdoc-openapi项目配置
 springdoc:

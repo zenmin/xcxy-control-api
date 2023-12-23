@@ -9,14 +9,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zh.controlcenter.common.entity.SysConfig;
 import com.zh.controlcenter.dao.mapper.SysConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
- * 
- *
- * @Author 
+ * @Author
  * @Date 2023-12-22 10:18:18
  */
 @Service
@@ -46,6 +46,18 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public boolean delete(Long id) {
         int i = sysConfigMapper.deleteById(id);
         return i > 0;
+    }
+
+    @Override
+    @Async
+    public void addPersonCount(int i) {
+        SysConfig one = super.getOne(new QueryWrapper<SysConfig>().select("id", "person_count").last("limit 1"));
+        StringBuilder c = new StringBuilder(String.valueOf(Integer.parseInt(Optional.ofNullable(one.getPersonCount()).orElse("0")) + i));
+        while (c.length() < 6) {
+            c.insert(0, "0");
+        }
+        one.setPersonCount(c.toString());
+        sysConfigMapper.updateById(one);
     }
 
 
