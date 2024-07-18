@@ -48,4 +48,8 @@ public class SysConfig extends AbstractEntityModel {
     @Schema(description = "每多少分钟加的人数  例如：100 表示每5分钟加100~100x2的人数", hidden = true)
     private Integer personCountAdd;
 
+    @Schema(description = "背景音乐")
+    private String bgm;
+
+
 }

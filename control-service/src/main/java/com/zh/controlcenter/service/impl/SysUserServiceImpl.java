@@ -20,7 +20,7 @@ import java.util.List;
  * @Date 2023-04-27 11:40:51
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+    public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired
     SysUserMapper sysUserMapper;

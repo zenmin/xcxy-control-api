@@ -255,7 +255,7 @@ public class SysUserController {
     @GetMapping("/export")
     @Operation(summary = "导出已领优惠券的用户")
     public Mono<org.springframework.http.ResponseEntity<byte[]>> export() {
-        List<SysUser> list = sysUserService.list(new QueryWrapper<SysUser>().eq("is_get", true).eq("status", CommonConstant.STATUS_OK).orderByDesc("create_time"));
+        List<SysUser> list = sysUserService.list(new QueryWrapper<SysUser>().eq("status", CommonConstant.STATUS_OK).orderByDesc("create_time"));
         ExportParams exportParams = new ExportParams("优惠券领取用户导出 " + DateUtil.now(), "Sheet1", ExcelType.XSSF);
         exportParams.setCreateHeadRows(true);
         Workbook workbook = ExcelExportUtil.exportExcel(exportParams, SysUser.class, list);
